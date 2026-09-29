@@ -598,6 +598,52 @@
     color: var(--orange);
   }
 
+
+  /* RECENT WORK GALLERY */
+  #gallery { background: var(--dark); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background: var(--dark-3);
+    border: 1px solid rgba(232,98,26,0.15);
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-cap {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 1.25rem 1rem 1rem;
+    background: linear-gradient(to top, rgba(14,12,10,0.92) 0%, transparent 100%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    line-height: 1.05;
+  }
+  .gallery-cap span {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.2rem;
+  }
+  @media (max-width: 900px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .gallery-cap { font-size: 1rem; padding: 1rem 0.7rem 0.7rem; }
+  }
+
   /* ANIMATIONS */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -642,6 +688,7 @@
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#why">Why Us</a></li>
+    <li><a href="#gallery">Our Work</a></li>
     <li><a href="#areas">Areas</a></li>
     <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
   </ul>
@@ -793,6 +840,32 @@
         <div class="photo-info-text">Owner on every single job — no exceptions</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- RECENT WORK GALLERY -->
+<section id="gallery">
+  <div class="reveal">
+    <div class="section-label">Recent Work</div>
+    <h2 class="section-title">On The Job</h2>
+  </div>
+  <div class="gallery-grid reveal">
+    <figure class="gallery-item">
+      <img src="images/road-saw-cutting.jpg" alt="Walk-behind saw cutting asphalt along a new roadway" loading="lazy">
+      <figcaption class="gallery-cap"><span>Asphalt</span>Road Saw Cutting</figcaption>
+    </figure>
+    <figure class="gallery-item">
+      <img src="images/utility-vault-trench.jpg" alt="Shored trench around a concrete utility vault" loading="lazy">
+      <figcaption class="gallery-cap"><span>Utility</span>Vault &amp; Trench Work</figcaption>
+    </figure>
+    <figure class="gallery-item">
+      <img src="images/wall-saw-below-grade.jpg" alt="Track-mounted wall saw cutting a concrete wall below grade" loading="lazy">
+      <figcaption class="gallery-cap"><span>Wall Sawing</span>Below-Grade Wall Cut</figcaption>
+    </figure>
+    <figure class="gallery-item">
+      <img src="images/slab-trench-cut.jpg" alt="Clean trench cut through a tiled concrete patio slab" loading="lazy">
+      <figcaption class="gallery-cap"><span>Residential</span>Slab Trench Cut</figcaption>
+    </figure>
   </div>
 </section>
 
