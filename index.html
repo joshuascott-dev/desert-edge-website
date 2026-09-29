@@ -944,44 +944,54 @@
       </div>
     </div>
     <div class="reveal">
-      <div class="contact-form">
+      <form class="contact-form" name="quote-request" method="POST" data-netlify="true" netlify-honeypot="company-website" onsubmit="return handleSubmit(event)">
+        <input type="hidden" name="form-name" value="quote-request">
+        <p style="display:none"><label>Leave blank <input name="company-website"></label></p>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">First Name</label>
-            <input type="text" class="form-input" placeholder="John">
+            <label class="form-label" for="f-first">First Name</label>
+            <input id="f-first" name="first-name" type="text" class="form-input" placeholder="John" required autocomplete="given-name">
           </div>
           <div class="form-group">
-            <label class="form-label">Last Name</label>
-            <input type="text" class="form-input" placeholder="Smith">
+            <label class="form-label" for="f-last">Last Name</label>
+            <input id="f-last" name="last-name" type="text" class="form-input" placeholder="Smith" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="f-phone">Phone</label>
+            <input id="f-phone" name="phone" type="tel" class="form-input" placeholder="(602) 000-0000" required autocomplete="tel">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" class="form-input" placeholder="you@company.com" autocomplete="email">
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Phone</label>
-          <input type="tel" class="form-input" placeholder="(602) 000-0000">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Service Type</label>
-          <select class="form-select">
+          <label class="form-label" for="f-service">Service Type</label>
+          <select id="f-service" name="service" class="form-select">
             <option value="">Select a service...</option>
             <option>Concrete Saw Cutting</option>
             <option>Asphalt Cutting</option>
             <option>Control Joint Cutting</option>
             <option>Utility Trenching</option>
+            <option>Wall Sawing</option>
             <option>Commercial Project</option>
             <option>Residential Project</option>
             <option>Other</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form="form-label">Location / City</label>
-          <input type="text" class="form-input" placeholder="Phoenix, Scottsdale, Tucson...">
+          <label class="form-label" for="f-location">Location / City</label>
+          <input id="f-location" name="location" type="text" class="form-input" placeholder="Phoenix, Scottsdale, Tucson...">
         </div>
         <div class="form-group">
-          <label class="form-label">Project Details</label>
-          <textarea class="form-textarea" placeholder="Describe your project — size, scope, timeline..."></textarea>
+          <label class="form-label" for="f-details">Project Details</label>
+          <textarea id="f-details" name="details" class="form-textarea" placeholder="Describe your project — size, scope, timeline..."></textarea>
         </div>
-        <button class="form-submit" onclick="handleSubmit(this)">Send Quote Request →</button>
-      </div>
+        <button type="submit" class="form-submit">Send Quote Request →</button>
+        <p class="form-error" style="display:none;color:#F4843A;margin-top:0.75rem;font-size:0.9rem">Something went wrong. Please call or text Nick at (520) 235-2914.</p>
+      </form>
     </div>
   </div>
 </section>
@@ -1010,10 +1020,29 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });
 reveals.forEach(r => io.observe(r));
-function handleSubmit(btn) {
-  btn.textContent = '✓ Request Sent! Nick Will Be In Touch.';
-  btn.style.background = '#2A7A3A';
+function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.form-submit');
+  const err = form.querySelector('.form-error');
   btn.disabled = true;
+  btn.textContent = 'Sending...';
+  err.style.display = 'none';
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(form)).toString()
+  }).then(r => {
+    if (!r.ok) throw new Error(r.status);
+    form.reset();
+    btn.textContent = '✓ Request Sent! Nick Will Be In Touch.';
+    btn.style.background = '#2A7A3A';
+  }).catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'Send Quote Request →';
+    err.style.display = 'block';
+  });
+  return false;
 }
 </script>
 </body>
