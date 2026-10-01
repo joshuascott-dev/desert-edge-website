@@ -652,13 +652,15 @@
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 360px;
     gap: 1rem;
     margin-top: 3rem;
   }
+  .gallery-wide { grid-column: span 2; }
+  .gallery-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .gallery-item {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 3 / 4;
     background: var(--dark-3);
     border: 1px solid rgba(232,98,26,0.15);
   }
@@ -668,7 +670,8 @@
     display: block;
     transition: transform 0.5s ease;
   }
-  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.05); }
+  .gallery-item video { transition: transform 0.5s ease; }
   .gallery-cap {
     position: absolute; left: 0; right: 0; bottom: 0;
     padding: 1.25rem 1rem 1rem;
@@ -688,7 +691,7 @@
     margin-bottom: 0.2rem;
   }
   @media (max-width: 900px) {
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 230px; gap: 0.6rem; }
     .gallery-cap { font-size: 1rem; padding: 1rem 0.7rem 0.7rem; }
   }
 
@@ -1036,6 +1039,18 @@
     <h2 class="section-title">On The Job</h2>
   </div>
   <div class="gallery-grid reveal">
+    <figure class="gallery-item gallery-wide">
+      <img src="images/night-road-cutting.jpg" alt="Desert Edge operator running a walk-behind saw on a roadway at night with traffic control" loading="lazy">
+      <figcaption class="gallery-cap"><span>Night Work</span>Overnight Road Cutting</figcaption>
+    </figure>
+    <figure class="gallery-item gallery-video">
+      <video src="video/saw-cutting-trench.mp4" poster="images/saw-cutting-trench-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Video of a Desert Edge saw cutting concrete next to an open utility trench"></video>
+      <figcaption class="gallery-cap"><span>Video</span>Cutting at the Trench</figcaption>
+    </figure>
+    <figure class="gallery-item">
+      <img src="images/slab-saw-crew.jpg" alt="Desert Edge operator saw cutting a concrete slab on a commercial site" loading="lazy">
+      <figcaption class="gallery-cap"><span>Concrete</span>Slab Saw Cutting</figcaption>
+    </figure>
     <figure class="gallery-item">
       <img src="images/road-saw-cutting.jpg" alt="Walk-behind saw cutting asphalt along a new roadway" loading="lazy">
       <figcaption class="gallery-cap"><span>Asphalt</span>Road Saw Cutting</figcaption>
