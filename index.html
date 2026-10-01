@@ -588,6 +588,18 @@
     color: var(--white);
   }
   .footer-logo span { color: var(--orange); }
+  .review-btn {
+    display: inline-block; margin-top: 0.6rem;
+    padding: 0.55rem 1rem;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--dark); background: var(--orange); text-decoration: none;
+    transition: background 0.2s;
+  }
+  .review-btn:hover { background: var(--orange-light); }
+  .footer-links { margin: 0.75rem 0; }
+  .footer-links a { color: var(--sand); font-size: 0.85rem; text-decoration: none; margin: 0 0.6rem; }
+  .footer-links a:hover { color: var(--orange-light); }
   .footer-copy { font-size: 0.8rem; color: var(--gray); }
   .footer-tagline {
     font-family: 'Barlow Condensed', sans-serif;
@@ -679,6 +691,9 @@
     pointer-events: none;
   }
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"Desert Edge Asphalt & Concrete Cutting","url":"https://desertedgecutting.com","telephone":"+1-520-235-2914","email":"info@desertedgecutting.com","areaServed":[{"@type":"City","name":"Phoenix, AZ"},{"@type":"City","name":"Tucson, AZ"}],"openingHours":"Mo-Sa 06:00-18:00","founder":"Nick Cresap","hasMap":"https://maps.app.goo.gl/MTw8hugbkRYoM9jv8","sameAs":["https://maps.app.goo.gl/MTw8hugbkRYoM9jv8"]}
+</script>
 </head>
 <body>
 
@@ -937,6 +952,14 @@
           <div class="contact-item-val">Phoenix Valley & Tucson, AZ</div>
         </div>
       </div>
+      <div class="contact-item">
+        <div class="contact-icon">⭐</div>
+        <div>
+          <div class="contact-item-label">Google</div>
+          <div class="contact-item-val"><a href="https://maps.app.goo.gl/MTw8hugbkRYoM9jv8" target="_blank" rel="noopener">Find us on Google Maps →</a></div>
+          <a href="https://maps.app.goo.gl/MTw8hugbkRYoM9jv8" target="_blank" rel="noopener" class="review-btn">★ Leave Us a Google Review</a>
+        </div>
+      </div>
       <div style="margin-top:1rem;padding:1.8rem;background:var(--dark-2);border-left:3px solid var(--orange);">
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);font-size:0.8rem;margin-bottom:0.5rem;">Owner / Operator</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white);margin-bottom:0.3rem;">Nick Cresap</div>
@@ -1000,7 +1023,8 @@
 <footer>
   <div class="footer-logo">Desert <span>Edge</span></div>
   <div class="footer-tagline">Cutting Arizona's Standard</div>
-  <div class="footer-copy">© 2025 Desert Edge Asphalt & Concrete Cutting · Nick Cresap · Arizona</div>
+  <div class="footer-links"><a href="tel:+15202352914">(520) 235-2914</a>·<a href="mailto:info@desertedgecutting.com">info@desertedgecutting.com</a>·<a href="https://maps.app.goo.gl/MTw8hugbkRYoM9jv8" target="_blank" rel="noopener">Google Reviews</a></div>
+  <div class="footer-copy">© <span id="yr">2026</span> Desert Edge Asphalt & Concrete Cutting · Nick Cresap · Arizona</div>
 </footer>
 
 <script>
@@ -1044,6 +1068,7 @@ function handleSubmit(e) {
   });
   return false;
 }
+document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
