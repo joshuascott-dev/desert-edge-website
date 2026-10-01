@@ -42,7 +42,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
   body {
     background: var(--dark);
@@ -705,6 +705,59 @@
     .hero-logo { max-width: 100%; margin-left: 0; }
   }
 
+  /* MOBILE MENU + CALL BAR */
+  .nav-toggle { display: none; }
+  .nav-call-item { display: none; }
+  .call-bar { display: none; }
+  @media (max-width: 900px) {
+    .nav-toggle {
+      display: flex; flex-direction: column; justify-content: center; gap: 6px;
+      width: 46px; height: 46px; padding: 10px;
+      background: transparent; border: 1px solid rgba(232,98,26,0.4); cursor: pointer;
+    }
+    .nav-toggle span { display: block; height: 2px; background: var(--white); transition: transform 0.25s, opacity 0.25s; }
+    nav.open .nav-toggle span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    nav.open .nav-toggle span:nth-child(2) { opacity: 0; }
+    nav.open .nav-toggle span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    .nav-links {
+      position: fixed; top: 72px; left: 0; right: 0;
+      flex-direction: column; gap: 0;
+      background: rgba(14,12,10,0.98);
+      border-bottom: 1px solid rgba(232,98,26,0.3);
+      padding: 0.5rem 5vw 1.5rem;
+      transform: translateY(-120%); opacity: 0; pointer-events: none;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    nav.open .nav-links { transform: none; opacity: 1; pointer-events: auto; }
+    .nav-links li { border-bottom: 1px solid rgba(196,168,130,0.12); }
+    .nav-links a { display: block; padding: 1rem 0; font-size: 1.1rem; }
+    .nav-links .nav-cta, .nav-links .nav-call { margin-top: 0.9rem; text-align: center; padding: 0.9rem 1rem; }
+    .nav-links li:has(.nav-cta), .nav-call-item { border-bottom: 0; }
+    .nav-call-item { display: block; }
+    .nav-call { border: 1px solid var(--orange); color: var(--white) !important; }
+
+    .call-bar {
+      display: grid; grid-template-columns: 1.4fr 1fr 1.2fr;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 99;
+      background: rgba(14,12,10,0.97);
+      border-top: 1px solid rgba(232,98,26,0.35);
+      padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
+      gap: 0.5rem;
+      backdrop-filter: blur(10px);
+    }
+    .call-bar-btn {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 50px;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; text-align: center;
+      text-decoration: none; color: var(--white);
+      border: 1px solid rgba(196,168,130,0.3);
+    }
+    .call-bar-call { background: var(--orange); color: var(--dark); border-color: var(--orange); }
+    .call-bar-quote { border-color: var(--orange); }
+    body { padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  }
+
   /* ANIMATIONS */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -727,7 +780,6 @@
     .areas-grid { grid-template-columns: 1fr; }
     .contact-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
     .photo-strip { grid-template-columns: 1fr; height: auto; }
     .photo-main { height: 260px; }
     .hero-photo { display: none; }
@@ -866,14 +918,23 @@
 <!-- NAV -->
 <nav>
   <a href="#hero" class="nav-logo" aria-label="Desert Edge home"><picture><source srcset="images/logo-sm.webp" type="image/webp"><img src="images/logo-sm.png" class="nav-logo-img" alt="Desert Edge Asphalt &amp; Concrete Cutting logo" width="240" height="169"></picture></a>
-  <ul class="nav-links">
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#services">Services</a></li>
     <li><a href="#why">Why Us</a></li>
     <li><a href="#gallery">Our Work</a></li>
     <li><a href="#areas">Areas</a></li>
     <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+    <li class="nav-call-item"><a href="tel:+15202352914" class="nav-call">📞 Call Nick · (520) 235-2914</a></li>
   </ul>
 </nav>
+
+<!-- STICKY MOBILE CALL BAR -->
+<div class="call-bar" role="region" aria-label="Contact Desert Edge">
+  <a href="tel:+15202352914" class="call-bar-btn call-bar-call">📞 Call Nick</a>
+  <a href="sms:+15202352914" class="call-bar-btn call-bar-text">💬 Text</a>
+  <a href="#contact" class="call-bar-btn call-bar-quote">Free Quote</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -1259,6 +1320,16 @@ function handleSubmit(e) {
   });
   return false;
 }
+const nav = document.querySelector('nav');
+const navToggle = document.querySelector('.nav-toggle');
+function setMenu(open) {
+  nav.classList.toggle('open', open);
+  navToggle.setAttribute('aria-expanded', open);
+  navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+}
+navToggle.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 document.getElementById('yr').textContent = new Date().getFullYear();
 </script>
 </body>
