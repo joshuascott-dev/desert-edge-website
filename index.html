@@ -609,6 +609,20 @@
     color: var(--white);
   }
   .footer-logo span { color: var(--orange); }
+  .map-embed { position: relative; margin-top: 2rem; border: 1px solid rgba(232,98,26,0.25); background: var(--dark-3); }
+  .map-embed iframe { display: block; width: 100%; height: 380px; border: 0; filter: grayscale(0.3) contrast(1.05); }
+  .map-link {
+    position: absolute; right: 1rem; bottom: 1rem;
+    padding: 0.6rem 1.1rem; background: var(--orange); color: var(--dark);
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  }
+  .map-link:hover { background: var(--orange-light); }
+  @media (max-width: 900px) {
+    .map-embed iframe { height: 300px; }
+    .map-link { position: static; display: block; text-align: center; }
+  }
   .review-btn {
     display: inline-block; margin-top: 0.6rem;
     padding: 0.55rem 1rem;
@@ -1042,6 +1056,10 @@
       <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);margin-bottom:0.2rem;">Not in these areas?</div>
       <p style="font-size:0.88rem;color:var(--gray);">Call us — we may still be able to accommodate your project. Contact Nick directly for out-of-area inquiries.</p>
     </div>
+  </div>
+  <div class="map-embed reveal">
+    <iframe src="https://www.google.com/maps?q=Desert+Edge+Asphalt+%26+Concrete+Cutting+(520)+235-2914&output=embed" title="Desert Edge on Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    <a class="map-link" href="https://maps.app.goo.gl/MTw8hugbkRYoM9jv8" target="_blank" rel="noopener">See photos &amp; reviews on Google →</a>
   </div>
 </section>
 
